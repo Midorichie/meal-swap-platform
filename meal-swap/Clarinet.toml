@@ -1,18 +1,85 @@
-name = "meal-swap"
-version = "0.1.0"
-authors = ["Hammed <hamsohood@gmail.com>"]
+[project]
+name = "meal-swap-platform"
+version = "2.0.0"
+description = "A decentralized meal swap platform with reputation system"
+authors = ["Your Name <your.email@example.com>"]
+telemetry = true
+cache-dir = "./.clarinet"
 
-# Local development network (Clarinet default)
-[[networks]]
-name = "localnet"
-url = "http://127.0.0.1:20443"
+[contracts.meal-swap]
+path = "contracts/meal-swap.clar"
+clarity-version = 2
+epoch = 2.5
 
-# Testnet configuration (optional)
-[[networks]]
-name = "testnet"
-url = "https://stacks-node-api.testnet.stacks.co"
+[contracts.reputation-system]
+path = "contracts/reputation-system.clar"
+clarity-version = 2
+epoch = 2.5
 
-# Mainnet configuration (optional)
-[[networks]]
-name = "mainnet"
-url = "https://stacks-node-api.mainnet.stacks.co"
+# Development configuration
+[repl]
+costs = true
+parser = 2
+
+[repl.analysis]
+passes = ["check_checker"]
+
+# Testing configuration
+[[project.requirements]]
+contract_id = "SP000000000000000000002Q6VF78.pox-4"
+
+[devnet]
+disable_stacks_explorer = false
+disable_stacks_api = false
+# Set high timeout for complex operations
+timeout = 30000
+
+# Network configurations
+[network]
+name = "devnet"
+
+[network.devnet]
+host = "http://localhost:20443"
+node_rpc_address = "http://localhost:20443"
+stacks_node_events_address = "http://localhost:3700"
+
+[network.testnet]
+host = "https://stacks-node-api.testnet.stacks.co"
+node_rpc_address = "https://stacks-node-api.testnet.stacks.co"
+
+[network.mainnet]
+host = "https://stacks-node-api.mainnet.stacks.co"
+node_rpc_address = "https://stacks-node-api.mainnet.stacks.co"
+
+# Cost and performance settings
+[repl.costs]
+large_contract_cost = 1000000
+contract_call_cost = 1000
+clarity_db_cost = 1000
+
+# Development accounts for testing
+[[devnet.accounts.deployer]]
+address = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
+balance = 100000000000000
+# secretKey = "753b7cc01a1a2e86221266a154af739463fce51219d97e4f856cd7200c3bd2a601"
+
+[[devnet.accounts.wallet_1]]
+address = "ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5"
+balance = 100000000000000
+
+[[devnet.accounts.wallet_2]]
+address = "ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG"
+balance = 100000000000000
+
+[[devnet.accounts.wallet_3]]
+address = "ST2JHG361ZXG51QTKY2NQCVBPPRRE2KZB1HR05NNC"
+balance = 100000000000000
+
+[[devnet.accounts.wallet_4]]
+address = "ST2NEB84ASENDXKYGJPQW86YXQCEFEX2ZQPG87ND"
+balance = 100000000000000
+
+# Advanced settings for larger contracts
+[project.cache]
+type_cache_size = 4096
+analysis_cache_size = 4096
